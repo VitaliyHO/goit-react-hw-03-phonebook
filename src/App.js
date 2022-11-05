@@ -5,6 +5,8 @@ import Form from './Components/Form/Form';
 import { Contacts } from './Components/Contacts/Contacts';
 import { Search } from './Components/Search/Search';
 
+const CONTACTS = 'contacts';
+
 class App extends Component {
 
   state = {
@@ -15,6 +17,16 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: ''
+  }
+
+  componentDidMount() {
+    const contactsFromStorage = localStorage.getItem(CONTACTS);
+    if(contactsFromStorage){
+      this.setState( {contacts: JSON.parse(contactsFromStorage) } )
+  }}
+
+  componentDidUpdate() {
+    localStorage.setItem(CONTACTS, JSON.stringify(this.state.contacts))
   }
 
   formSubmitHandler = data => {
